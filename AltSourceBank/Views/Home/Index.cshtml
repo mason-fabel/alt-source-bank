@@ -1,0 +1,55 @@
+﻿<script src="~/Scripts/home/main.js"></script>
+
+<div ng-app="altsourceBank" ng-controller="altsourceBankController">
+	<div class="panel panel-default" ng-hide="user.key">
+		<div class="panel-heading">Log In</div>
+		<div class="panel-body">
+			<div ng-cloak>
+				<div class="alert alert-danger" ng-show="alert.failure"><strong>Error!</strong> Unable to log in. Please check your credentials and try again.</div>
+			</div>
+			<form>
+				<div class="form-group">
+					<label for="user-email">Email Address</label>
+					<input type="email" class="form-control" id="user-email" ng-model="user.email" />
+				</div>
+				<div class="form-group">
+					<label for="user-password">Password</label>
+					<input type="password" class="form-control" id="user-password" ng-model="user.password" />
+				</div>
+				<button class="btn btn-primary" ng-click="log_in()" ng-disabled="!user.email || !user.password">Log In</button>
+			</form>
+			<small class="form-text text-muted">No account? <a href="/User/" class="btn btn-sm">Sign Up</a></small>
+		</div>
+	</div>
+	<div class="panel panel-default" ng-show="user.key" ng-cloak>
+		<div class="panel-heading">{{user.name}}'s Account</div>
+		<div class="panel-body">
+			<p>Current Balance: {{user.balance | currency}}</p>
+			<form>
+				<div class="form-group">
+					<label for="deposit-amount">Deposit</label>
+					<input type="number" step="0.01" class="form-control" id="deposit-amount" ng-model="deposit_amount" />
+				</div>
+				<button class="btn" ng-click="deposit()" ng-disabled="!deposit_amount">Deposit <span class="glyphicon glyphicon-plus-sign"></span></button>
+			</form>
+			<form>
+				<div class="form-group">
+					<label for="withdrawal-amount">Withdrawal</label>
+					<input type="number" step="0.01" class="form-control" id="withdrawal-amount" ng-model="withdrawal_amount" />
+				</div>
+				<button class="btn" ng-click="withdrawal()" ng-disabled="!withdrawal_amount">Withdrawal <span class="glyphicon glyphicon-minus-sign"></span></button>
+			</form>
+			<p>Transaction History</p>
+			<table class="table table-bordered table-striped table-hover">
+				<thead><tr><td>Date</td><td>Type</td><td>Amount</td><td>Balance</td></tr></thead>
+				<tr ng-repeat="transaction in user.transactions track by $index" ng-class="{ success: transaction.amount > 0, danger: transaction.amount < 0 }">
+					<td>{{transaction.date | date : "d MMM yyyy h:mm a"}}</td>
+					<td>{{transaction.amount > 0 ? "Deposit" : "Withdrawal"}}</td>
+					<td>{{transaction.amount | currency}}</td>
+					<td>{{transaction.balance | currency}}</td>
+				</tr>
+			</table>
+			<button class="btn" ng-click="log_out()">Log Out</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,32 @@
+﻿<script src="~/Scripts/user/main.js"></script>
+
+<div ng-app="altsourceBank" ng-controller="altsourceBankUserController">
+	<div class="panel panel-default">
+		<div class="panel-heading">Sign Up</div>
+		<div class="panel-body">
+			<div ng-cloak>
+				<div class="alert alert-success" ng-show="alert.success"><strong>Success!</strong> Account created for {{user.name}}</div>
+				<div class="alert alert-danger" ng-show="alert.failure"><strong>Error!</strong> Unable to create account for {{user.name}}</div>
+			</div>
+			<form>
+				<div class="form-group">
+					<label for="user-name">Name</label>
+					<input type="text" class="form-control" id="user-name" ng-model="user.name" />
+				</div>
+				<div class="form-group">
+					<label for="user-email">Email Address</label>
+					<input type="email" class="form-control" id="user-email" ng-model="user.email" />
+				</div>
+				<div class="form-group">
+					<label for="user-password">Password</label>
+					<input type="password" class="form-control" id="user-password" ng-model="user.password" />
+				</div>
+				<div class="form-group">
+					<label for="user-password-confirm">Confirm Password</label>
+					<input type="password" class="form-control" id="user-password-confirm" ng-model="user.password_confirm" />
+				</div>
+				<button class="btn btn-primary" ng-click="create_user()" ng-disabled="user.password != user.password_confirm || !user.password">Create User <span class="glyphicon glyphicon-plus"></span></button>
+			</form>
+		</div>
+	</div>
+</div>
